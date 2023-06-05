@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ReactComponent as SearchIcon } from '../icons/search-glass.svg'
 import css from './SearchBar.module.css';
-
 
 class SearchBar extends Component {
   state = {
@@ -31,15 +31,15 @@ class SearchBar extends Component {
   render() {
     const { query } = this.state;
     return (
-      <header className={css.searchbar}>
-        <form onSubmit={this.onSubmitForm} className={css.searchform}>
-          <button type="submit" className={css.button}>
-            <span className={css.button_label}>Search</span>
+      <header className={css.Searchbar}>
+        <form onSubmit={this.onSubmitForm} className={css.SearchForm}>
+          <button type="submit" className={css.SearchFormButton}>
+            <SearchIcon className={css.SearchFormButtonLabel} />
           </button>
 
           <input
             onChange={this.handleInput}
-            className={css.input}
+            className={css.SearchFormInput}
             value={query}
             type="text"
             autoComplete="off"

@@ -3,6 +3,9 @@ import SearchBar from './Search_bar/Search_bar';
 import { SearchImages } from './Api/ApiPixabay'
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
+import Modal from './Modal/Modal';
+import Loader from './Loader/Loader';
+import css from './App'
 
 class App extends Component {
   state = {
@@ -15,6 +18,7 @@ class App extends Component {
     isLoading: false,
     isVisible: false,
     error: null,
+    showModal: false,
   };
 
   componentDidUpdate(_, prevState) {
@@ -67,18 +71,48 @@ class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+
+  onOpenModal = (largeImage, tags) => {
+    this.setState({
+      showModal: true,
+      largeImage,
+      tags,
+    });
+  };
+  onCloseModal = () => {
+    this.setState({
+      showModal: false,
+      largeImage: '',
+      tags: '',
+    });
+  };
+
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, total, showModal, largeImage, tags } =
+      this.state;
+    const totalPage = total / images.length;
 
     return (
-      <div>
-        <SearchBar onSubmit={this.onHandleSubmit} />
-        {images.length === 0 && <p>Enter something, please</p>}
-        {images.length !== 0 && <ImageGallery images={images} />}
-        <Button onClick={this.onLoadMore} disabled={isLoading} />
-        {isLoading ? 'Loading...' : 'Load more'}
-      </div>
-    );
+        <main className={css.App}>
+          <SearchBar onSubmit={this.onHandleSubmit} />
+          {isLoading && Loader()}
+          {images.length === 0 && <p>Enter something, please</p>}
+          {images.length !== 0 && (
+            <ImageGallery images={images} openModal={this.onOpenModal} />
+          )}
+          {totalPage > 1 && !isLoading && images.length !== 0 && (
+            <Button onClick={this.onLoadMore} />
+          )}
+          {isLoading ? 'Loading...' : ''}
+          {showModal && (
+            <Modal
+              tags={tags}
+              largeImage={largeImage}
+              onCloseModal={this.onCloseModal}
+            />
+          )}
+        </main>
+        );
   }
 };
 
