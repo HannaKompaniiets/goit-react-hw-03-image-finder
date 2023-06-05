@@ -1,52 +1,55 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import css from './SearchBar.module.css';
 
 
-class SearchBar extends Component { 
-    state = { 
-    searchigImages: '',
-    }
+class SearchBar extends Component {
+  state = {
+    query: '',
+  };
 
-    handleInput = (event) => { 
+  handleInput = event => {
     this.setState({
-        searchigImages: event.currentTarget.value.toLowerCase(),
-    })  
-    }
+      query: event.currentTarget.value.toLowerCase(),
+    });
+  };
 
-    onSubmitForm = (event) => {
-        event.preventDefault();
-        
-        if (this.state.searchigImages.trim() === '') {
-            alert('write searching image')
-            return 
-        }
-        this.props.onSubmit(this.state.searchigImages);
-        this.setState({ searchigImages: '' })
-        
-    }
+  onSubmitForm = event => {
+    event.preventDefault();
 
-    render(){ 
-        return (
-            
-                <header className={css.searchbar}>
-                <form onSubmit={ this.onSubmitForm} className={css.searchform}>
-                    <button type="submit" className={css.button}>
-                            <span className={css.button_label}>Search</span>
-                    </button>
+      const { query } = this.state;
+      
+      if (query.trim() === '') {
+        toast.error('Please enter something');
+        return;
+      }
+    this.props.onSubmit(query);
+    this.setState({ query: '' });
+  };
 
-                        <input onChange={this.handleInput}
-                        className={css.input}
-                        value={ this.state.searchigImages}
-                        type="text"
-                        autoComplete="off"
-                        autoFocus
-                        placeholder="Search images and photos"
-                        />
-                </form>
-            </header>
-            
-        )
-    }
+  render() {
+    const { query } = this.state;
+    return (
+      <header className={css.searchbar}>
+        <form onSubmit={this.onSubmitForm} className={css.searchform}>
+          <button type="submit" className={css.button}>
+            <span className={css.button_label}>Search</span>
+          </button>
+
+          <input
+            onChange={this.handleInput}
+            className={css.input}
+            value={query}
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          />
+        </form>
+      </header>
+    );
+  }
 }
 
 
