@@ -1,14 +1,3 @@
-// import axios from 'axios';
-
-
-
-// export const SearchImages = async (query, page) => {
-//   const API_KEY = '35822629-b9359d31660fe7f3ad5b1d613';
-//   const url = 'https://pixabay.com/api/';
-  
-//   const { data } = await axios.get(`${url}?q=${query}&page=${page}&key=${API_KEY}`);
-//   return data;
-// };
 import axios from 'axios';
 export async function SearchImages(query, page) {
   const BASE_URL = `https://pixabay.com/api/`;

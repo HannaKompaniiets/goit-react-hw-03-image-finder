@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ReactComponent as SearchIcon } from '../icons/search-glass.svg'
+import { ReactComponent as SearchIcon } from '../icons/search-glass.svg';
+import PropTypes from 'prop-types';
 import css from './SearchBar.module.css';
 
 class SearchBar extends Component {
@@ -54,3 +55,7 @@ class SearchBar extends Component {
 
 
 export default SearchBar;
+
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

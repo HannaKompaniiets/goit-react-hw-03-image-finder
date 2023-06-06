@@ -95,7 +95,7 @@ class App extends Component {
     return (
         <main className={css.App}>
           <SearchBar onSubmit={this.onHandleSubmit} />
-          {isLoading && Loader()}
+          {isLoading && <Loader />}
           {images.length === 0 && <p>Enter something, please</p>}
           {images.length !== 0 && (
             <ImageGallery images={images} openModal={this.onOpenModal} />
@@ -103,7 +103,6 @@ class App extends Component {
           {totalPage > 1 && !isLoading && images.length !== 0 && (
             <Button onClick={this.onLoadMore} />
           )}
-          {isLoading ? 'Loading...' : ''}
           {showModal && (
             <Modal
               tags={tags}
